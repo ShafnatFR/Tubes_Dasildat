@@ -295,33 +295,8 @@ function postVal($key, $default) {
             </div>
         </div>
 
-        <div class="form-actions" style="display: flex; gap: 10px; margin-top: 16px;">
-            <button type="submit" style="flex: 2;">🔍 Prediksi Sekarang</button>
-            <button type="button" onclick="isiDataAcak()" style="flex: 1; background: #95a5a6; transition: background 0.2s;" onmouseover="this.style.background='#7f8c8d'" onmouseout="this.style.background='#95a5a6'">🎲 Isi Data Acak</button>
-        </div>
+        <button type="submit">🔍 Prediksi Sekarang</button>
     </form>
-
-    <script>
-    function isiDataAcak() {
-        const dummies = [
-            // Positif (Diabetes)
-            {p:6, g:148, bp:72, s:35, i:0, bmi:33.6, dpf:0.627, a:50},
-            {p:8, g:183, bp:64, s:0, i:0, bmi:23.3, dpf:0.672, a:32},
-            // Negatif (Normal)
-            {p:1, g:85, bp:66, s:29, i:0, bmi:26.6, dpf:0.351, a:31},
-            {p:0, g:89, bp:66, s:23, i:94, bmi:28.1, dpf:0.167, a:21}
-        ];
-        const r = dummies[Math.floor(Math.random() * dummies.length)];
-        document.querySelector('input[name="pregnancies"]').value = r.p;
-        document.querySelector('input[name="glucose"]').value = r.g;
-        document.querySelector('input[name="blood_pressure"]').value = r.bp;
-        document.querySelector('input[name="skin_thickness"]').value = r.s;
-        document.querySelector('input[name="insulin"]').value = r.i;
-        document.querySelector('input[name="bmi"]').value = r.bmi;
-        document.querySelector('input[name="diabetes_pedigree"]').value = r.dpf;
-        document.querySelector('input[name="age"]').value = r.a;
-    }
-    </script>
 
     <!-- Error -->
     <?php if ($error): ?>
