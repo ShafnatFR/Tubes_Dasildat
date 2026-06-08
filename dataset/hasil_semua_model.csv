@@ -1,0 +1,11 @@
+Pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigreeFunction,Age,Prediksi_SVM,Prediksi_K_NN,Prediksi_Decision_Tree,Prediksi_Neural_Network
+2,110,70,25,80,28.5,450,32,Tidak Diabetes,Diabetes,Diabetes,Diabetes
+5,145,82,30,150,34.2,612,45,Tidak Diabetes,Diabetes,Tidak Diabetes,Diabetes
+0,95,65,20,0,24.1,215,25,Tidak Diabetes,Diabetes,Tidak Diabetes,Diabetes
+3,160,90,0,0,36.5,850,50,Tidak Diabetes,Diabetes,Tidak Diabetes,Diabetes
+1,105,75,28,110,29.8,320,28,Tidak Diabetes,Diabetes,Tidak Diabetes,Diabetes
+7,135,80,32,130,31.4,480,42,Tidak Diabetes,Diabetes,Tidak Diabetes,Diabetes
+0,120,72,22,95,26.5,190,22,Tidak Diabetes,Diabetes,Tidak Diabetes,Diabetes
+4,180,85,40,200,38.0,735,38,Tidak Diabetes,Diabetes,Tidak Diabetes,Diabetes
+2,90,60,18,0,22.5,250,30,Tidak Diabetes,Diabetes,Tidak Diabetes,Diabetes
+6,125,78,0,0,33.0,520,48,Tidak Diabetes,Diabetes,Tidak Diabetes,Diabetes

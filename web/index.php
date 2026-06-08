@@ -1,5 +1,4 @@
 <?php
-// Redirect otomatis ke halaman utama aplikasi
-header("Location: panggil_machine_learning.php");
+// Router — titik masuk aplikasi web
+header('Location: form_prediksi.php');
 exit;
-?>

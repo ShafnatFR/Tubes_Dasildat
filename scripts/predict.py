@@ -15,6 +15,7 @@ import pandas as pd
 import sys
 import json
 import os
+import time
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -48,8 +49,9 @@ COLUMNS = [
 def get_label(x):
     return 'Diabetes' if x == 1 else 'Tidak Diabetes'
 
-def predict_single(model_key, df):
-    scaler = joblib.load(SCALER_FILE)
+def predict_single(model_key, df, scaler=None):
+    if scaler is None:
+        scaler = joblib.load(SCALER_FILE)
     scaled = scaler.transform(df)
     model  = joblib.load(MODEL_FILES[model_key])
     result = model.predict(scaled)
@@ -70,18 +72,30 @@ if __name__ == '__main__':
         df = pd.DataFrame([input_data], columns=COLUMNS)
 
         if model_key == 'all':
-            # Prediksi semua model
+            scaler = joblib.load(SCALER_FILE)
             results = {}
+            timings = {}
             for key in MODEL_FILES:
-                results[MODEL_LABELS[key]] = predict_single(key, df)
-            print(json.dumps({'mode': 'all', 'results': results}))
+                t0 = time.perf_counter()
+                results[MODEL_LABELS[key]] = predict_single(key, df, scaler)
+                timings[MODEL_LABELS[key]] = round((time.perf_counter() - t0) * 1000, 2)
+            total_ms = round(sum(timings.values()), 2)
+            print(json.dumps({
+                'mode': 'all',
+                'results': results,
+                'timings': timings,
+                'execution_time_ms': total_ms
+            }))
 
         elif model_key in MODEL_FILES:
+            t0 = time.perf_counter()
             label = predict_single(model_key, df)
+            elapsed_ms = round((time.perf_counter() - t0) * 1000, 2)
             print(json.dumps({
                 'mode':  'single',
                 'model': MODEL_LABELS[model_key],
-                'class': label
+                'class': label,
+                'execution_time_ms': elapsed_ms
             }))
 
         else:
