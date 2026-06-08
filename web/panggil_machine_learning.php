@@ -11,7 +11,7 @@ $modelOptions = [
     'knn' => 'K-NN (K-Nearest Neighbor)',
     'dt'  => 'Decision Tree',
     'nn'  => 'Neural Network',
-    'all' => '⭐ Semua Model (Bandingkan)',
+    'all' => 'Semua Model (Bandingkan)',
 ];
 
 // ── Prediksi ──────────────────────────────────────────────────────────────────
@@ -92,32 +92,21 @@ function postVal($key, $default) {
         h1 { text-align: center; color: #2c3e50; margin-bottom: 4px; font-size: 22px; }
         .subtitle { text-align: center; color: #7f8c8d; margin-bottom: 24px; font-size: 13px; }
 
-        /* Model selector tabs */
+        /* Model selector dropdown */
         .model-selector { margin-bottom: 20px; }
         .model-selector label { display: block; font-weight: bold; color: #333; margin-bottom: 8px; font-size: 13px; }
-        .model-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
-        .model-tab input[type="radio"] { display: none; }
-        .model-tab label {
-            display: inline-block;
-            padding: 6px 13px;
-            border: 2px solid #ddd;
-            border-radius: 20px;
+        .model-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #fff;
+            color: #333;
+            transition: border-color 0.2s;
             cursor: pointer;
-            font-size: 12px;
-            color: #555;
-            transition: all 0.2s;
-            background: #fafafa;
         }
-        .model-tab input[type="radio"]:checked + label {
-            border-color: #3498db;
-            background: #3498db;
-            color: white;
-            font-weight: bold;
-        }
-        .model-tab.all input[type="radio"]:checked + label {
-            border-color: #e67e22;
-            background: #e67e22;
-        }
+        .model-select:focus { outline: none; border-color: #3498db; }
 
         /* Form */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -242,56 +231,49 @@ function postVal($key, $default) {
 
         <!-- Pilih Model -->
         <div class="model-selector">
-            <label>Pilih Model Algoritma:</label>
-            <div class="model-tabs">
+            <label for="model">Pilih Model Algoritma:</label>
+            <select name="model" id="model" class="model-select">
                 <?php foreach ($modelOptions as $key => $label): ?>
-                    <div class="model-tab <?php echo $key === 'all' ? 'all' : ''; ?>">
-                        <input
-                            type="radio"
-                            name="model"
-                            id="model_<?php echo $key; ?>"
-                            value="<?php echo $key; ?>"
-                            <?php echo ($modelUsed === $key || ($modelUsed === '' && $key === 'svm')) ? 'checked' : ''; ?>
-                        >
-                        <label for="model_<?php echo $key; ?>"><?php echo $label; ?></label>
-                    </div>
+                    <option value="<?php echo $key; ?>" <?php echo ($modelUsed === $key || ($modelUsed === '' && $key === 'svm')) ? 'selected' : ''; ?>>
+                        <?php echo $label; ?>
+                    </option>
                 <?php endforeach; ?>
-            </div>
+            </select>
         </div>
 
         <!-- Input Fitur -->
         <div class="form-grid">
             <div class="form-group">
                 <label>Kehamilan (Pregnancies) <span class="range">0–20</span></label>
-                <input type="number" step="1" min="0" max="20" name="pregnancies" value="<?php echo postVal('pregnancies','6'); ?>" required>
+                <input type="number" step="1" min="0" max="20" name="pregnancies" value="<?php echo postVal('pregnancies',''); ?>" placeholder="Contoh: 6" required>
             </div>
             <div class="form-group">
                 <label>Kadar Glukosa <span class="range">0–300</span></label>
-                <input type="number" step="any" min="0" max="300" name="glucose" value="<?php echo postVal('glucose','148'); ?>" required>
+                <input type="number" step="any" min="0" max="300" name="glucose" value="<?php echo postVal('glucose',''); ?>" placeholder="Contoh: 148" required>
             </div>
             <div class="form-group">
                 <label>Tekanan Darah <span class="range">0–200</span></label>
-                <input type="number" step="any" min="0" max="200" name="blood_pressure" value="<?php echo postVal('blood_pressure','72'); ?>" required>
+                <input type="number" step="any" min="0" max="200" name="blood_pressure" value="<?php echo postVal('blood_pressure',''); ?>" placeholder="Contoh: 72" required>
             </div>
             <div class="form-group">
                 <label>Ketebalan Kulit <span class="range">0–100</span></label>
-                <input type="number" step="any" min="0" max="100" name="skin_thickness" value="<?php echo postVal('skin_thickness','35'); ?>" required>
+                <input type="number" step="any" min="0" max="100" name="skin_thickness" value="<?php echo postVal('skin_thickness',''); ?>" placeholder="Contoh: 35" required>
             </div>
             <div class="form-group">
                 <label>Insulin <span class="range">0–900</span></label>
-                <input type="number" step="any" min="0" max="900" name="insulin" value="<?php echo postVal('insulin','0'); ?>" required>
+                <input type="number" step="any" min="0" max="900" name="insulin" value="<?php echo postVal('insulin',''); ?>" placeholder="Contoh: 0" required>
             </div>
             <div class="form-group">
                 <label>BMI <span class="range">0–80</span></label>
-                <input type="number" step="any" min="0" max="80" name="bmi" value="<?php echo postVal('bmi','33.6'); ?>" required>
+                <input type="number" step="any" min="0" max="80" name="bmi" value="<?php echo postVal('bmi',''); ?>" placeholder="Contoh: 33.6" required>
             </div>
             <div class="form-group">
                 <label>Diabetes Pedigree <span class="range">0–3</span></label>
-                <input type="number" step="any" min="0" max="3" name="diabetes_pedigree" value="<?php echo postVal('diabetes_pedigree','0.627'); ?>" required>
+                <input type="number" step="any" min="0" max="3" name="diabetes_pedigree" value="<?php echo postVal('diabetes_pedigree',''); ?>" placeholder="Contoh: 0.627" required>
             </div>
             <div class="form-group">
                 <label>Usia <span class="range">1–120</span></label>
-                <input type="number" step="1" min="1" max="120" name="age" value="<?php echo postVal('age','50'); ?>" required>
+                <input type="number" step="1" min="1" max="120" name="age" value="<?php echo postVal('age',''); ?>" placeholder="Contoh: 50" required>
             </div>
         </div>
 
